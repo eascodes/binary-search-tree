@@ -1,10 +1,7 @@
-const NodeFactory = (data, left, right) => {
-    if (!left) left = null;
-    if (!right) right = null;
+const NodeFactory = (data) => {
     data = data;
-    left = left;
-    right = right;
-    return { data, left, right }
+    left = right = null;
+    return { data }
 }
 
 const TreeFactory = (arr) => {
