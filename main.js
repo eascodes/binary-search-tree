@@ -8,7 +8,15 @@ const NodeFactory = (data, left, right) => {
 }
 
 const TreeFactory = (arr) => {
-    root = buildTree();
+    let sortedArr = arr.sort(compareNumbers);
+    let reducedArr = removeDups(sortedArr);
+    root = buildTree(reducedArr, 0, reducedArr.length - 1);
+
+    const insert = (value) => {
+
+    }
+
+    return { root, insert }
 }
 
 function removeDups(arr) {
@@ -29,41 +37,16 @@ function compareNumbers(a, b) {
     return a - b;
   }
 
-function buildTree(arr) {
-    if (arr.length === 1) {
-        let root = NodeFactory(arr[0]);
-        return root;
-    };
-    if (arr.length < 1 || arr === null) return null;
-    
-    // Make copy of array, filter out duplicates, & sort
-    let copy = [...arr];
-    copy = removeDups(copy);
-    copy = copy.sort(compareNumbers);
-    
-    let mid = parseInt((copy.length - 1)/2);
-    let rootValue = copy[mid];
-    
-    let leftArr;
-    let rightArr;
-    if (copy.slice(0,mid)) {
-        leftArr = copy.slice(0,mid);
-    } else {
-        leftArr = null;
-    }
-    
-    if (copy.slice((mid+1),copy.length)) {
-        rightArr = copy.slice((mid+1),copy.length);
-    } else {
-        rightArr = null;
-    }
+function buildTree(arr, start, end) {
+    if (start > end) return null;
 
-    let root = NodeFactory(rootValue);
-    root.left = buildTree(leftArr);
-    root.right = buildTree(rightArr);
+    let mid = parseInt((start + end) / 2);
+    let node = NodeFactory(arr[mid]);
 
-    return root;
+    node.left = buildTree(arr, start, mid - 1);
+    node.right = buildTree(arr, mid + 1, end);
 
+    return node;
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -75,3 +58,4 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
       prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
   }
+
