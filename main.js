@@ -38,7 +38,7 @@ const TreeFactory = (arr) => {
 
         if (value < root.data) {
             root.left = deleteNode(root.left, value);
-        } else if ( value > root.data) {
+        } else if (value > root.data) {
             root.right = deleteNode(root.right, value);
         } else {
             if (root.left == null) {
@@ -62,7 +62,19 @@ const TreeFactory = (arr) => {
         return minVal;
     }
 
-    return { root, insertNode, deleteNode }
+    const find = (root, value) => {
+        if (root == null) return root;
+
+        if (value < root.data) {
+            return find(root.left, value);
+        } else if (value > root.data) {
+            return find(root.right, value);
+        } else {
+            return root;
+        }
+    }
+
+    return { root, insertNode, deleteNode, find }
 }
 
 function removeDups(arr) {
@@ -105,3 +117,5 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
   }
 
+  let test = [1,1,9,2,3,8,8,4,5,6,6,7];
+  test = TreeFactory(test);
