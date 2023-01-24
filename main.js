@@ -74,7 +74,32 @@ const TreeFactory = (arr) => {
         }
     }
 
-    return { root, insertNode, deleteNode, find }
+    const levelOrder = ( root, func ) => {
+        
+        let result = [];
+        let q = [root];
+        let node;
+
+        while (q.length >= 1) {
+            for (let i=0; i < q.length; i++) {
+                node = q.shift();
+                if (node) {
+                    if (func) {
+                        func(node);
+                    } else {
+                        result.push(node.data);
+                    }
+                    q.push(node.left);
+                    q.push(node.right);
+                }
+            }
+        }
+        if (!func) {
+            return result;
+        }
+    }
+
+    return { root, insertNode, deleteNode, find, levelOrder }
 }
 
 function removeDups(arr) {
@@ -116,6 +141,3 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
       prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
   }
-
-  let test = [1,1,9,2,3,8,8,4,5,6,6,7];
-  test = TreeFactory(test);
