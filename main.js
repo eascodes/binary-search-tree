@@ -141,3 +141,6 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
       prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
   }
+
+  let test = [1,1,9,2,3,8,8,4,5,6,6,7];
+  test = TreeFactory(test);
