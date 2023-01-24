@@ -9,7 +9,7 @@ const TreeFactory = (arr) => {
     let reducedArr = removeDups(sortedArr);
     root = buildTree(reducedArr, 0, reducedArr.length - 1);
 
-    const insert = (root, value) => {
+    const insertNode = (root, value) => {
         let node = NodeFactory(value);
         if (!root) {
             root = node;
@@ -33,7 +33,36 @@ const TreeFactory = (arr) => {
         }
     }
 
-    return { root, insert }
+    const deleteNode = (root, value) => {
+        if (root == null) return root;
+
+        if (value < root.data) {
+            root.left = deleteNode(root.left, value);
+        } else if ( value > root.data) {
+            root.right = deleteNode(root.right, value);
+        } else {
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+
+            root.data = minValue(root.right);
+            root.right = deleteNode(root.right, root.value);
+        }
+        return root;
+    }
+
+    function minValue(root) {
+        let minVal = root.data;
+        while (root.left != null) {
+            minVal = root.left.data;
+            root = root.left;
+        }
+        return minVal;
+    }
+
+    return { root, insertNode, deleteNode }
 }
 
 function removeDups(arr) {
