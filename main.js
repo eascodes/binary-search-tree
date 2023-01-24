@@ -1,7 +1,7 @@
 const NodeFactory = (data) => {
     data = data;
     left = right = null;
-    return { data }
+    return { data, left, right }
 }
 
 const TreeFactory = (arr) => {
@@ -9,8 +9,28 @@ const TreeFactory = (arr) => {
     let reducedArr = removeDups(sortedArr);
     root = buildTree(reducedArr, 0, reducedArr.length - 1);
 
-    const insert = (value) => {
-
+    const insert = (root, value) => {
+        let node = NodeFactory(value);
+        if (!root) {
+            root = node;
+            return;
+        }
+        let prev = null;
+        let current = root;
+        while (current) {
+            if (current.data > value) {
+                prev = current;
+                current = current.left;
+            } else if (current.data < value) {
+                prev = current;
+                current = current.right;
+            }
+        }
+        if (prev.data > value) {
+            prev.left = node;
+        } else {
+            prev.right = node;
+        }
     }
 
     return { root, insert }
