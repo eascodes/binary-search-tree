@@ -48,7 +48,7 @@ const TreeFactory = (arr) => {
             }
 
             root.data = minValue(root.right);
-            root.right = deleteNode(root.right, root.value);
+            root.right = deleteNode(root.right, root.data);
         }
         return root;
     }
