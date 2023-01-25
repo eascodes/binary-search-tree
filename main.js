@@ -155,7 +155,55 @@ const TreeFactory = (arr) => {
         }
      }
 
-    return { root, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder }
+     const height = ( root ) => {
+        if (root == null) return -1;
+
+        let leftHt = height(root.left);
+        let rightHt = height(root.right);
+
+        return Math.max(leftHt, rightHt) + 1;
+     }
+
+     const depth = ( root, node ) => {
+        if (root == null) return;
+        
+        let nodeDepth = 0;
+        let current = root;
+        while (current) {
+            if (current.data > node.data) {
+                nodeDepth++;
+                current = current.left;
+            } else if (current.data < node.data) {
+                nodeDepth++;
+                current = current.right;
+            } else if (current.data == node.data) {
+                return nodeDepth;
+            }
+        }
+
+     }
+
+     const isBalanced = ( root ) => {
+        if (root == null) return -1;
+
+        let leftHt = height(root.left);
+        let rightHt = height(root.right);
+
+        leftHt = leftHt + 1;
+        rightHt = rightHt + 1;
+
+        let diff = leftHt - rightHt;
+
+        if (diff > 1 || diff < -1) {
+            return false;
+        } else {
+            isBalanced(root.left);
+            isBalanced(root.right);
+        }
+        return true;
+     }
+
+    return { root, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder, height, depth, isBalanced }
 }
 
 function removeDups(arr) {
