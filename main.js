@@ -203,7 +203,12 @@ const TreeFactory = (arr) => {
         return true;
      }
 
-    return { root, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder, height, depth, isBalanced }
+     const rebalance = ( root ) => {
+        let arr = inOrder(root);
+        return TreeFactory(arr);
+     }
+
+    return { root, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder, height, depth, isBalanced, rebalance }
 }
 
 function removeDups(arr) {
