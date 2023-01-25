@@ -6,13 +6,16 @@ const NodeFactory = (data) => {
 
 const TreeFactory = (arr) => {
   
+  // Helper function for sorting array
   function compareNumbers(a, b) {
     return a - b;
      }
 
+  // Sort input array & remove duplicates
   let sortedArr = arr.sort(compareNumbers);
   let reducedArr = removeDups(sortedArr);
 
+  // Build balanced BST
   const buildTree = (arr, start, end) => {
     if (start > end) return null;
   
@@ -27,6 +30,7 @@ const TreeFactory = (arr) => {
 
   let root = buildTree(reducedArr, 0, reducedArr.length - 1);
   
+  // Insert node of specific value into BST
   const insertNode = (root, value) => {
     let node = NodeFactory(value);
     if (!root) {
@@ -51,6 +55,7 @@ const TreeFactory = (arr) => {
     }
   };
 
+  // Delete node of specific value from BST
   const deleteNode = (root, value) => {
     if (root == null) return root;
 
@@ -71,6 +76,7 @@ const TreeFactory = (arr) => {
     return root;
   };
 
+  // Helper function for deleteNode - returns smallest value in right branch
   function minValue(root) {
     let minVal = root.data;
     while (root.left != null) {
@@ -80,6 +86,7 @@ const TreeFactory = (arr) => {
     return minVal;
   }
 
+  // Finds & returns node of specified value
   const find = (root, value) => {
     if (root == null) return root;
 
@@ -92,6 +99,9 @@ const TreeFactory = (arr) => {
     }
   };
 
+  // Traverses BST in breadth-first level order & 
+  // passes each node into specified callback f(x) 
+  // (otherwise returns array of visited nodes)
   const levelOrder = (root, func) => {
     let result = [];
     let q = [root];
@@ -116,6 +126,9 @@ const TreeFactory = (arr) => {
     }
   };
 
+  // Traverses BST in depth-first preorder traversal & 
+  // passes each node into specified callback f(x) 
+  // (otherwise returns array of visited nodes)
   const preOrder = (root, func) => {
     if (root) {
       if (func) {
@@ -137,6 +150,9 @@ const TreeFactory = (arr) => {
     }
   };
 
+  // Traverses BST in depth-first in order traversal & 
+  // passes each node into specified callback f(x) 
+  // (otherwise returns array of visited nodes)
   const inOrder = (root, func) => {
     if (root) {
       if (func) {
@@ -159,6 +175,9 @@ const TreeFactory = (arr) => {
     }
   };
 
+  // Traverses BST in depth-first postorder traversal & 
+  // passes each node into specified callback f(x) 
+  // (otherwise returns array of visited nodes)
   const postOrder = (root, func) => {
     if (root) {
       if (func) {
@@ -180,6 +199,7 @@ const TreeFactory = (arr) => {
     }
   };
 
+  // Returns height of specified node
   const height = (root) => {
     if (root == null) return -1;
 
@@ -189,6 +209,7 @@ const TreeFactory = (arr) => {
     return Math.max(leftHt, rightHt) + 1;
   };
 
+  // Returns depth of specified node
   const depth = (root, node) => {
     if (root == null) return;
 
@@ -207,6 +228,8 @@ const TreeFactory = (arr) => {
     }
   };
 
+  // Returns true if BST is balanced, 
+  // otherwise returns false
   const isBalanced = (root) => {
     if (root == null) return -1;
 
@@ -227,6 +250,7 @@ const TreeFactory = (arr) => {
     return true;
   };
 
+  // Rebalances BST
   const rebalance = (root) => {
     let arr = inOrder(root);
     return TreeFactory(arr);
@@ -263,6 +287,7 @@ function removeDups(arr) {
   return result;
 }
 
+// Print binary search tree to console
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node.right !== null) {
     prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
