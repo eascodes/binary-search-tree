@@ -99,7 +99,63 @@ const TreeFactory = (arr) => {
         }
     }
 
-    return { root, insertNode, deleteNode, find, levelOrder }
+     const preOrder = ( root, func ) => {
+        if (root) {
+            if (func) {
+                func(root);
+                if (root.left) preOrder(root.left, func);
+                if (root.right) preOrder(root.right, func);
+            } else {
+                if (root == null) return;
+
+                let result = [root.data].concat(preOrder(root.left)).concat(preOrder(root.right));
+                result = result.filter(function(element) { 
+                    return element !== undefined
+                });
+                
+                return result;
+            }
+        }
+     }
+
+     const inOrder = ( root, func ) => {
+        if (root) {
+            if (func) {
+                if (root.left) inOrder(root.left, func);
+                func(root);
+                if (root.right) inOrder(root.right, func);
+            } else {
+                if (root == null) return;
+
+                let result = [].concat(inOrder(root.left)).concat(root.data).concat(inOrder(root.right));
+                result = result.filter(function(element) { 
+                    return element !== undefined
+                });
+                
+                return result;
+            }
+        }
+     }
+
+     const postOrder = ( root, func ) => {
+        if (root) {
+            if (func) {
+                if (root.left) postOrder(root.left, func);
+                if (root.right) postOrder(root.right, func);
+                func(root);
+            } else {
+                if (root == null) return;
+
+                let result = [].concat(postOrder(root.left)).concat(postOrder(root.right)).concat(root.data);
+                result = result.filter(function(element) { 
+                    return element !== undefined
+                });
+                return result;
+            }
+        }
+     }
+
+    return { root, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder }
 }
 
 function removeDups(arr) {
@@ -141,6 +197,10 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
       prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
   }
+
+function printMe(node) {
+    console.log(`Print! ${node.data}`);
+}
 
   let test = [1,1,9,2,3,8,8,4,5,6,6,7];
   test = TreeFactory(test);
