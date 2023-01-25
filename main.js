@@ -5,10 +5,28 @@ const NodeFactory = (data) => {
 };
 
 const TreeFactory = (arr) => {
+  
+  function compareNumbers(a, b) {
+    return a - b;
+     }
+
   let sortedArr = arr.sort(compareNumbers);
   let reducedArr = removeDups(sortedArr);
-  root = buildTree(reducedArr, 0, reducedArr.length - 1);
 
+  const buildTree = (arr, start, end) => {
+    if (start > end) return null;
+  
+    let mid = parseInt((start + end) / 2);
+    let node = NodeFactory(arr[mid]);
+  
+    node.left = buildTree(arr, start, mid - 1);
+    node.right = buildTree(arr, mid + 1, end);
+  
+    return node;
+  }
+
+  let root = buildTree(reducedArr, 0, reducedArr.length - 1);
+  
   const insertNode = (root, value) => {
     let node = NodeFactory(value);
     if (!root) {
@@ -216,6 +234,7 @@ const TreeFactory = (arr) => {
 
   return {
     root,
+    buildTree,
     insertNode,
     deleteNode,
     find,
@@ -242,22 +261,6 @@ function removeDups(arr) {
     }
   }
   return result;
-}
-
-function compareNumbers(a, b) {
-  return a - b;
-}
-
-function buildTree(arr, start, end) {
-  if (start > end) return null;
-
-  let mid = parseInt((start + end) / 2);
-  let node = NodeFactory(arr[mid]);
-
-  node.left = buildTree(arr, start, mid - 1);
-  node.right = buildTree(arr, mid + 1, end);
-
-  return node;
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
