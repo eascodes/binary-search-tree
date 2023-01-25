@@ -255,5 +255,48 @@ function printMe(node) {
     console.log(`Print! ${node.data}`);
 }
 
-  let test = [1,1,9,2,3,8,8,4,5,6,6,7];
-  test = TreeFactory(test);
+// Test script
+// Step 1
+console.log("1) Create a binary search tree from an array of random numbers");
+let randomArr = Array.from({length: 12}, () => Math.floor(Math.random() * 12));
+console.log(`Random array: ${randomArr}`);
+let newTree = TreeFactory(randomArr);
+console.log(prettyPrint(newTree.root));
+
+//Step 2
+console.log("2) Confirm that the tree is balanced by calling isBalanced");
+console.log(`newTree.isBalanced(newTree.root) = ${newTree.isBalanced(newTree.root)}`);
+
+// Step 3
+console.log("3) Print out all elements in level, pre, post, and in order");
+console.log(`Level: ${newTree.levelOrder(newTree.root)}`);
+console.log(`Preorder: ${newTree.preOrder(newTree.root)}`);
+console.log(`Postorder: ${newTree.postOrder(newTree.root)}`);
+console.log(`In order: ${newTree.inOrder(newTree.root)}`);
+
+// Step 4
+console.log("4) Unbalance the tree by adding several numbers > 100");
+newTree.insertNode(newTree.root, 200);
+newTree.insertNode(newTree.root, 300);
+newTree.insertNode(newTree.root, 400);
+prettyPrint(newTree.root);
+
+// Step 5
+console.log("5) Confirm that the tree is unbalanced by calling isBalanced");
+console.log(`newTree.isBalanced(newTree.root) = ${newTree.isBalanced(newTree.root)}`);
+
+// Step 6
+console.log("6) Balance the tree by calling rebalance");
+newTree = newTree.rebalance(newTree.root);
+prettyPrint(newTree.root);
+
+// Step 7
+console.log("7) Confirm that the tree is balanced by calling isBalanced");
+console.log(`newTree.isBalanced(newTree.root) = ${newTree.isBalanced(newTree.root)}`);
+
+// Step 8
+console.log("8) Print out all elements in level, pre, post, and in order");
+console.log(`Level: ${newTree.levelOrder(newTree.root)}`);
+console.log(`Preorder: ${newTree.preOrder(newTree.root)}`);
+console.log(`Postorder: ${newTree.postOrder(newTree.root)}`);
+console.log(`In order: ${newTree.inOrder(newTree.root)}`);
