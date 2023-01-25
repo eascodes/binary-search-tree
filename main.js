@@ -6,16 +6,30 @@ const NodeFactory = (data) => {
 
 const TreeFactory = (arr) => {
   
-  // Helper function for sorting array
+  // Helper functions for sorting array & removing duplicates
   function compareNumbers(a, b) {
     return a - b;
      }
 
-  // Sort input array & remove duplicates
+  function removeDups(arr) {
+    let seen = {};
+    let result = [];
+    let j = 0;
+    for (let i = 0; i < arr.length; i++) {
+      let item = arr[i];
+      if (seen[item] !== 1) {
+        seen[item] = 1;
+        result[j++] = item;
+      }
+    }
+    return result;
+  }
+
+  // Sorts input array & remove duplicates
   let sortedArr = arr.sort(compareNumbers);
   let reducedArr = removeDups(sortedArr);
 
-  // Build balanced BST
+  // Builds balanced BST
   const buildTree = (arr, start, end) => {
     if (start > end) return null;
   
@@ -30,7 +44,7 @@ const TreeFactory = (arr) => {
 
   let root = buildTree(reducedArr, 0, reducedArr.length - 1);
   
-  // Insert node of specific value into BST
+  // Inserts node of specific value into BST
   const insertNode = (root, value) => {
     let node = NodeFactory(value);
     if (!root) {
@@ -55,7 +69,7 @@ const TreeFactory = (arr) => {
     }
   };
 
-  // Delete node of specific value from BST
+  // Deletes node of specific value from BST
   const deleteNode = (root, value) => {
     if (root == null) return root;
 
@@ -272,20 +286,6 @@ const TreeFactory = (arr) => {
     rebalance,
   };
 };
-
-function removeDups(arr) {
-  let seen = {};
-  let result = [];
-  let j = 0;
-  for (let i = 0; i < arr.length; i++) {
-    let item = arr[i];
-    if (seen[item] !== 1) {
-      seen[item] = 1;
-      result[j++] = item;
-    }
-  }
-  return result;
-}
 
 // Print binary search tree to console
 const prettyPrint = (node, prefix = "", isLeft = true) => {
