@@ -273,10 +273,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-function printMe(node) {
-  console.log(`Print! ${node.data}`);
-}
-
 // Test script
 // Step 1
 console.log("1) Create a binary search tree from an array of random numbers");
