@@ -238,6 +238,8 @@ const TreeFactory = (arr) => {
         current = current.right;
       } else if (current.data == node.data) {
         return nodeDepth;
+      } else {
+        return "Node could not be found.";
       }
     }
   };
